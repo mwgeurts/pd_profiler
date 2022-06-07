@@ -33,20 +33,14 @@ function [res, image] = Generate2DImage(profile)
 % You should have received a copy of the GNU General Public License along 
 % with this program. If not, see http://www.gnu.org/licenses/.
 
-% Calculate image resolution from first two profile elements
-res = [abs(profile(1,1) - profile(2,1)) abs(profile(1,1) - profile(2,1))];
+% Calculate image resolution as the minimum resolution of the input profile
+res = repmat(min(abs(diff(profile(:,1)))), [1 2]);
 
 % Calculate image at provided resolution
-x = size(profile,1);
-image = zeros(x * 2 - 1);
+x = ceil(abs(profile(end,1)-profile(1,1))/res(1));
+image = repmat(1:2*x-1, [2*x-1 1]);
+image = interp1(profile(:,1), profile(:, end), sqrt((image - x) .^ 2 + ...
+    (image' - x) .^ 2) * res(1), 'linear', profile(end, end));
 
-% Set extrapolated value
-e = profile(x, size(profile,2));
-
-% Loop through the image array, calculating image values
-for i = 1:size(image,1)
-    for j = 1:size(image,2)
-        image(i,j) = interp1(profile(:,1), profile(:, size(profile,2)), ...
-            sqrt((i - x) ^ 2 + (j - x) ^ 2), 'linear', e);
-    end
-end
+% Clean up
+clear x;
