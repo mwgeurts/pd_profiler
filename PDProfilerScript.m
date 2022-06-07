@@ -11,11 +11,12 @@ targetProfile = LoadCDP(targetIntensityProfileCDP);
 currentCalibration = LoadCDP(currentCalibrationCDP);
 
 % Load DXF measured image
-[~, resolution, measuredImage] = LoadDXF(measuredImageDXF);
+[~, measuredResolution, measuredImage] = LoadDXF(measuredImageDXF);
 
 % Align measured image to target intensity profile
-targetImage = Generate2DImage(targetProfile);
-%offsets = Register2DImages(measuredImage, targetImage);
+[targetResolution, targetImage] = Generate2DImage(targetProfile);
+offsets = Register2DImages(measuredImage, measuredResolution, ...
+    targetImage, targetResolution);
 
 % Calculate average measured profile
 %measuredProfile = CalculateRadialProfile(measuredImage, offsets);
