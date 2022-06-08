@@ -1,14 +1,14 @@
 % Define input files
-targetIntensityProfileCDP = './6X_Open Field - 00_Intensity Profile.cdp';
-currentCalibrationCDP = './6X_COMPOSITE_20CM.cdp';
-measuredImageDXF = './TB1344_6X.dxf';
+targetIntensityProfileCDP = './10X_Open Field - 00_Intensity Profile.cdp';
+currentCalibrationCDP = './10X_COMPOSITE_20CM.cdp';
+measuredImageDXF = './TB1344_10X.dxf';
 
 % Define output file
-newCalibrationCDP = './6X_NEW_CALIBRATION.cdp';
+newCalibrationCDP = './10X_NEW_CALIBRATION.cdp';
 
-% Load profiles from W2CAD files
-targetProfile = LoadCDP(targetIntensityProfileCDP);
-currentCalibration = LoadCDP(currentCalibrationCDP);
+% Load and sort profiles from W2CAD files
+targetProfile = sortrows(LoadCDP(targetIntensityProfileCDP));
+currentCalibration = sortrows(LoadCDP(currentCalibrationCDP));
 
 % Load DXF measured image, clipping outer edges
 [~, measuredResolution, measuredImage] = LoadDXF(measuredImageDXF);
