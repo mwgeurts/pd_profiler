@@ -28,6 +28,6 @@ newProfile(:,4) = currentCalibration(:,4) ./ interp1(targetProfile(:,1), ...
 newProfile(:,4) = newProfile(:,4) * currentCalibration(1,4)/newProfile(1,4);
 
 % Save new calibration profile to W2CAD format, using header from current
-%SaveCDP(newProfile, newCalibrationCDP, currentCalibrationCDP);
+SaveCDP(newProfile, newCalibrationCDP, currentCalibrationCDP);
 
 

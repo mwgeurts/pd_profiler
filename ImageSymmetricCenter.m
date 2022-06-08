@@ -5,7 +5,9 @@ function [center, profile] = ImageSymmetricCenter(image)
 % mean radial profile from the center coordinate to the edge of the
 % image.
 %
-% This function requires the optimization toolbox.
+% Example usage:
+%  image = phantom();
+%  [center, profile] = ImageSymmetricCenter(double(image));
 %
 % Author: Mark Geurts, mark.w.geurts@gmail.com
 % Copyright (C) 2022 Aspirus, Inc.
