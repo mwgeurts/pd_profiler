@@ -55,7 +55,7 @@ try
     for i = 2:size(str,2)
         % If the line is not empty, write additional line tab-justified
         % with first line
-        if ~strcmp(str{i}, ''); fprintf(fid, '\t\t\t\t%s\n', str{i}); end
+        if ~strcmp(str{i}, ''); fprintf(fid, '\t\t\t\t\t%s\n', str{i}); end
     end
     
     % Close file handle
@@ -89,7 +89,7 @@ catch
     for i = 2:size(str,2)
         % If the line is not empty, write additional line tab-justified
         % with first line
-        if ~strcmp(str{i}, ''); fprintf('\t\t\t\t%s\n', str{i}); end
+        if ~strcmp(str{i}, ''); fprintf('\t\t\t\t\t\t\t%s\n', str{i}); end
     end
     
     % If UI handle is present, add event to UI cell string in black

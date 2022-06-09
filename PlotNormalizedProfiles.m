@@ -30,8 +30,10 @@ function PlotNormalizedProfiles(arrays, handle, method)
 % with this program. If not, see http://www.gnu.org/licenses/.
 
 % Normalize values based on method input
+s = 0;
 for i = 1:length(arrays)
     if ~isempty(arrays{i})
+        s = i;
         switch method
             case 'first'
                 arrays{i}(:,end) = arrays{i}(:,end)/arrays{i}(1,end);
@@ -43,9 +45,9 @@ for i = 1:length(arrays)
     end
 end
 
-% Plot first array
+% Plot first non-empty array
 axes(handle);
-plot(handle, arrays{1}(:,1), arrays{1}(:,end));
+plot(handle, arrays{s}(:,1), arrays{s}(:,end));
 hold(handle, 'on');
 
 % Loop through remaining arrays, plotting non-empty ones
@@ -61,4 +63,4 @@ end
 hold(handle, 'off');
 
 % Clean up 
-clear i;
+clear s i;
