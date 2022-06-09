@@ -15,13 +15,14 @@ currentCalibration = sortrows(LoadCDP(currentCalibrationCDP));
 measuredImage = measuredImage(11:end-11, 11:end-11);
 
 % Find symmetric center profile of measured image
-[~, measuredProfile] = ImageSymmetricCenter(measuredImage);
+[~, measuredProfile(:,2)] = ImageSymmetricCenter(measuredImage);
+measuredProfile(:,1) = (0:length(measuredProfile)-1)*measuredResolution(1);
 
 % Calculate new calibration profile from target/measured profile difference
 newProfile = currentCalibration;
-newProfile(:,4) = currentCalibration(:,4) ./ interp1(targetProfile(:,1), ...
+newProfile(:,4) = currentCalibration(:,4) .* interp1(targetProfile(:,1), ...
     targetProfile(:,4), currentCalibration(:,1), 'linear', targetProfile(end,4)) ...
-    .* interp1((0:length(measuredProfile)-1)*measuredResolution(1), measuredProfile, ...
+    ./ interp1(measuredProfile(:,1), measuredProfile(:,2), ...
     currentCalibration(:,1), 'linear', targetProfile(end,4));
 
 % Renormalize to current calibration value
