@@ -66,6 +66,9 @@ while ~feof(fid)
                     sscanf(tline, '<%f %f %f %f>')'];
             end
         end
+
+        % Set position values to always be positive
+        profiles{length(profiles)}(:,1:2) = abs(profiles{length(profiles)}(:,1:2));
     end
 end
 

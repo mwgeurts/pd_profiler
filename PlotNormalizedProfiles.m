@@ -2,7 +2,8 @@ function PlotNormalizedProfiles(arrays, handle, method)
 % PlotNormalizedProfiles plots a cell array of [n x m] matrices to the 
 % provided axes handle. For each cell array, the elements (n) within the 
 % first and last columns (m) are plotted, normalized based on method. If 
-% n > 2, the first two columns will be multiplied together as the x values.
+% n > 2, the first two columns will be multiplied together as the 
+% horizontal axis values.
 % 
 % Method can be one of the following strings:
 %   'none' for no normalization
@@ -37,6 +38,7 @@ for i = 1:length(arrays)
         if s == 0 
             s = i;
         end
+        % Available options are 'first', 'max', and 'mean'
         switch method
             case 'first'
                 arrays{i}(:,end) = arrays{i}(:,end)/arrays{i}(1,end);
@@ -51,7 +53,8 @@ end
 % Plot first non-empty array
 axes(handle);
 if size(arrays{s},2) > 2
-    plot(handle, sqrt(arrays{s}(:,1).^2 + arrays{s}(:,2).^2), arrays{s}(:,end));
+    plot(handle, sqrt(arrays{s}(:,1).^2 + arrays{s}(:,2).^2), ...
+        arrays{s}(:,end));
 else
     plot(handle, arrays{s}(:,1), arrays{s}(:,end));
 end
@@ -61,7 +64,8 @@ hold(handle, 'on');
 for i = 2:length(arrays)
     if ~isempty(arrays{i})
         if size(arrays{i},2) > 2
-            plot(handle, sqrt(arrays{i}(:,1).^2 + arrays{i}(:,2).^2), arrays{i}(:,end));
+            plot(handle, sqrt(arrays{i}(:,1).^2 + ...
+                arrays{i}(:,2).^2), arrays{i}(:,end));
         else
             plot(handle, arrays{i}(:,1), arrays{i}(:,end));
         end

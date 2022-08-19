@@ -45,7 +45,7 @@ elseif ismac
     
     % If sw_vers is successful
     if status == 0
-        
+
         % Add the product name
         cellarr{1} = strrep(cmdout, 'ProductName:', '');
         
@@ -53,7 +53,7 @@ elseif ismac
         cellarr{1} = strrep(cellarr{1}, sprintf('\t'), '');
         
         % Remove new lines
-        cellarr{1} = strrep(cellarr{1}, sprintf('\n'), ' ');
+        cellarr{1} = strrep(cellarr{1}, newline, ' ');
         
         % Clean up ProductVersion
         cellarr{1} = strrep(cellarr{1}, 'ProductVersion:', ' Version: ');
