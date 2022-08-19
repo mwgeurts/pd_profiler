@@ -63,7 +63,9 @@ end
 
 % Write profile array
 for i = 1:size(profile, 1)
-    fprintf(fid, '<%+.1f %+.1f %+.1f %+.1f>\n', profile(i, 1:4));
+    if ~any(isnan(profile(i, 1:4)))
+        fprintf(fid, '<%+.1f %+.1f %+.1f %+.1f>\n', profile(i, 1:4));
+    end
 end
 
 % Write footer
