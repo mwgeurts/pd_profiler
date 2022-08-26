@@ -33,18 +33,27 @@ profiles = zeros(max(size(image)), rays);
 % Start optimization at center of image
 center = size(image)/2 + 0.5;
 
+% Display progress dialog
+d = waitbar(0, 'Aligning measured image');
+p = 0;
+
 % Run optimization
 options = optimset('Display', 'iter');
 center = fminsearch(@objectiveFunction, center, options);
 
 % Clean up
-clear rays profiles x y;
+close(d);
+clear rays profiles x y d p;
 
 % Clip profile NaNs
 profile = profile(~isnan(profile));
 
 % Define optimization function
 function f = objectiveFunction(c)
+
+    % Update waitbar
+    p = p + 0.005;
+    waitbar(min(p,1), d);
 
     % Loop through rays
     for i = 1:rays
@@ -58,7 +67,7 @@ function f = objectiveFunction(c)
     end
 
     % Calculate median profile
-    profile = mean(profiles, 2, 'omitnan');
+    profile = median(profiles, 2, 'omitnan');
 
     % Calculate sum square difference from average
     f = sum((profiles - repmat(profile, [1 rays])) .^ 2, 'all', 'omitnan');
