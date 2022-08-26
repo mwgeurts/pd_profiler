@@ -1,12 +1,14 @@
-function [offset, res, image] = LoadDXF(filename)
-% LoadCDP loads a image from an DXF file. This function accepts one
-% argument: a string containing the file name. The function will return
-% three variables: [N x 1] array of image offsets, [N x 1] array of axis 
-% resolutions, and an ND array of image values
+function [offset, res, image, field] = LoadDXF(filename, varargin)
+% LoadCDP loads a image from an DXF file. This function accepts up to two
+% arguments: a string containing the file name and an boolean indicating 
+% whether to return the full image (false or not specified) or clipped to 
+% the field edge (true). The function will return four variables: [N x 1] 
+% array of image offsets, [N x 1] array of axis resolutions, an ND array of 
+% image values, and a two element vector field size [X, Y].
 %
 % Example usage for a 2D image:
 % 
-%  [offset, res, image] = LoadDXF('path/to/DXFfile.dxf');
+%  [offset, res, image, field] = LoadDXF('path/to/DXF_file.dxf');
 %  imagesc(image);
 %
 % Author: Mark Geurts, mark.w.geurts@gmail.com
@@ -27,6 +29,9 @@ function [offset, res, image] = LoadDXF(filename)
 
 % Open read handle to text file
 fid = fopen(filename, 'rt');
+
+% Initialize return variables
+field = zeros(1,2);
 
 % Loop through lines of text
 while ~feof(fid)
@@ -54,6 +59,14 @@ while ~feof(fid)
     elseif length(tline) > 6 && strcmp(tline(1:6), 'Offset')
         x = sscanf(tline, 'Offset%i=%f');
         offset(x(1)) = x(2);
+
+    % If line contains field size, set return variable
+    elseif length(tline) > 6 && strcmp(tline(1:5), 'CollX')
+        x = sscanf(tline, 'CollX%i=%f');
+        field(1) = field(1) + abs(x(2));
+    elseif length(tline) > 6 && strcmp(tline(1:5), 'CollY')
+        x = sscanf(tline, 'CollY%i=%f');
+        field(2) = field(2) + abs(x(2));
     
     % If line contains data flag, read to end of file
     elseif length(tline) >= 6 && strcmp(tline(1:6), '[Data]')
@@ -66,3 +79,12 @@ end
 % Close file handle and clean up
 fclose(fid);
 clear tline fid;
+
+% If an input flag is provided, clip the image to the field edges
+if nargin > 1 && varargin{1}
+
+    % Return only the indices of image with at least 10 values above 30%
+    image = image(sum(image > max(max(image)) * 0.3, 2) > 10, ...
+        sum(image > max(max(image)) * 0.3, 1) > 10);
+    clear x y;
+end
