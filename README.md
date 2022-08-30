@@ -3,7 +3,7 @@
 by Mark Geurts <mark.w.geurts@gmail.com>
 <br>Copyright &copy; 2022, Aspirus Health
 
-Portal Dosimetry Profiler is a MATLAB&reg; tool that can be used to create optimized PVA Beam Profile curves for Portal Dosimetry on a Varian&reg; TrueBeam&trade; system. 
+Portal Dosimetry Profiler is a MATLAB&reg; tool that can be used to create optimized PVA Beam Profile curves for Portal Dosimetry on a Varian&reg; TrueBeam&trade; system. MATLAB is a registered trademark of Mathworks. Varian and TrueBeam are trademarks of Varian Medical Systems, a Siemens Healthineers company.
 
 Most recommendations are to use shallow depth water tank diagonal profiles when calibrating Dosimetry mode. While this typically works well for small fields and low energies, discrepancies are often observed for higher energies and larger fields which can impact Portal Dosimetry QA results. This tool will create a calibration curve that optimizes the MV panel response to your Portal Dosimetry calculation algorithm/model similar to the approaches presented in Bailey <sup>[1]</sup> and Hobson <sup>[2]</sup>.
 
