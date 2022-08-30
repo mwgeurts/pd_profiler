@@ -11,7 +11,7 @@ Most recommendations are to use shallow depth water tank diagonal profiles when 
 
 Download the PDProfiler.mlapp and other repository files and run in MATLAB&reg; 2021 or later. Then follow the steps below for each beam energy you wish to optimize:
 
-1. Import the provided DICOM RT Plan to calcualte a planned image of an open field. Note, the provided plan is for standard MLC120 machines. Contact the author if you need an HD120 plan.
+1. Import the provided DICOM RT Plan to calculate a planned image of an open field. Note, the provided plan is for standard MLC120 machines. Contact the author if you need an HD120 plan.
 2. Deliver the field on your portal dosimeter and measure the panel response.
 3. Export the planned and measured Portal Dosimetry images in .DXF format.
 4. Using this app, load the current Beam Profile calibration, planned image, and measured image into the tool.
