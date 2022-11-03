@@ -38,7 +38,7 @@ p = 0;
 
 % Run optimization
 m = 5000;
-options = optimset('MaxFunEvals', m);
+options = optimset('Display', 'off', 'MaxFunEvals', m, 'MaxIter', m);
 vars = [center, y'];
 vars = fminsearch(@objectiveFunction, vars, options);
 center = vars(1:2);
