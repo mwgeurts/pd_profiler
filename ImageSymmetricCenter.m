@@ -2,7 +2,7 @@ function [center, profile] = ImageSymmetricCenter(image)
 % FindSymmetricCenter runs an optimization to find the pixel coordinates 
 % around which a 2D image is most symmetric. It returns two variables, a 
 % [2 x 1] vector of center coordinates and a [n x 1] array representing the
-% mean radial profile from the center coordinate to the edge of the
+% median radial profile from the center coordinate to the edge of the
 % image.
 %
 % Example usage:
@@ -26,7 +26,7 @@ function [center, profile] = ImageSymmetricCenter(image)
 % with this program. If not, see http://www.gnu.org/licenses/.
 
 % Define number of rays to average and initialize profile/profiles arrays
-rays = 32;
+rays = 128;
 profile = zeros(max(size(image)), 1);
 profiles = zeros(max(size(image)), rays);
 
