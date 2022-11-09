@@ -28,7 +28,7 @@ image = image / image(ceil(center(1)), ceil(center(2)));
 radial(:,2) = radial(:,2) / radial(1,2);
 
 % Initialize corrected radial x and y values
-n = 20;
+n = 15;
 x = (0:1/(n-1):1)'*radial(end,1);
 y = ones(length(x)-1, 1);
 
@@ -37,8 +37,7 @@ d = waitbar(0, 'Optimizing calibration correction');
 p = 0;
 
 % Run optimization
-m = 5000;
-options = optimset('Display', 'off', 'MaxFunEvals', m, 'MaxIter', m);
+options = optimset('Display', 'final', 'MaxFunEvals', n*100+1000, 'MaxIter', n*100);
 vars = [center, y'];
 vars = fminsearch(@objectiveFunction, vars, options);
 center = vars(1:2);
@@ -46,13 +45,13 @@ corrected = [x, [1 vars(3:end)]'];
 
 % Clean up
 close(d);
-clear d p m;
+clear d p n;
 
 % Define optimization function
 function f = objectiveFunction(c)
 
     % Update waitbar
-    p = p + 1/m;
+    p = p + 1/(n*100);
     waitbar(min(p,1), d);
 
     % Calculate radial coordinates of image pixels
@@ -62,8 +61,8 @@ function f = objectiveFunction(c)
     % Apply correction to radial profile
     cr = radial(:,2) .* interp1(x, [1 c(3:end)], radial(:,1), 'linear', 1);
     
-    % Objective is abs difference between image and corrected profile
-    f = sum(sum(abs(interp1(radial(:,1), cr, r, 'linear', 0) - image)));
+    % Objective is difference between image and corrected profile
+    f = sum(sum((interp1(radial(:,1), cr, r, 'linear', 0) - image) .^ 2));
 
 end
 
