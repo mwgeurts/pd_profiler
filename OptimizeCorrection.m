@@ -28,7 +28,7 @@ image = image / image(ceil(center(1)), ceil(center(2)));
 radial(:,2) = radial(:,2) / radial(1,2);
 
 % Initialize corrected radial x and y values
-n = 15;
+n = 20;
 x = (0:1/(n-1):1)'*radial(end,1);
 y = ones(length(x)-1, 1);
 
